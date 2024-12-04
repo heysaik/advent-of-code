@@ -1,10 +1,8 @@
-use std::cmp::min;
-
 fn main() {
     let input: String = std::fs::read_to_string("input.txt").unwrap();
     let rows: Vec<&str> = input.split("\n").collect::<Vec<&str>>();
-    let cols: Vec<String> = rows[0].chars().map(|c| c.to_string()).collect::<Vec<String>>();
-    let matrix: Vec<Vec<String>> = rows.iter().map(|s| s.chars().map(|c| c.to_string()).collect()).collect::<Vec<Vec<String>>>();
+    let cols: Vec<String> = rows[0].chars().map(|c: char| c.to_string()).collect::<Vec<String>>();
+    let matrix: Vec<Vec<String>> = rows.iter().map(|s: &&str| s.chars().map(|c| c.to_string()).collect()).collect::<Vec<Vec<String>>>();
     let mut part1_count: i32 = 0;
     let mut part2_count: i32 = 0;
 
@@ -86,7 +84,7 @@ fn main() {
         while current_row < rows.len() - 1 {
             if matrix[current_row][current_col] == "A" {
                 if ((matrix[current_row - 1][current_col - 1] == "M" && matrix[current_row + 1][current_col + 1] == "S") || (matrix[current_row - 1][current_col - 1] == "S" && matrix[current_row + 1][current_col + 1] == "M")) &&
-               ((matrix[current_row - 1][current_col + 1] == "M" && matrix[current_row + 1][current_col - 1] == "S") || (matrix[current_row - 1][current_col + 1] == "S" && matrix[current_row + 1][current_col - 1] == "M")) {
+                   ((matrix[current_row - 1][current_col + 1] == "M" && matrix[current_row + 1][current_col - 1] == "S") || (matrix[current_row - 1][current_col + 1] == "S" && matrix[current_row + 1][current_col - 1] == "M")) {
                     part2_count += 1;
                 }
             }
