@@ -1,3 +1,5 @@
+use std::cmp::min;
+
 fn main() {
     let input: String = std::fs::read_to_string("input.txt").unwrap();
     let rows: Vec<&str> = input.split("\n").collect::<Vec<&str>>();
@@ -75,6 +77,22 @@ fn main() {
     println!("Part 1 Count: {}", part1_count);
     
     // Part 2
-
+    // Iterate through the inner box of the matrix ignoring the edges
+    // If you find an "A" check the top left and bottom right for "MS" or "SM" and top right and bottom left for "MS" or "SM"
+    // If you find both (making an "X"), increase the count
+    let mut current_col: usize = 1;
+    while current_col < cols.len() - 1 {
+        current_row = 1;
+        while current_row < rows.len() - 1 {
+            if matrix[current_row][current_col] == "A" {
+                if ((matrix[current_row - 1][current_col - 1] == "M" && matrix[current_row + 1][current_col + 1] == "S") || (matrix[current_row - 1][current_col - 1] == "S" && matrix[current_row + 1][current_col + 1] == "M")) &&
+               ((matrix[current_row - 1][current_col + 1] == "M" && matrix[current_row + 1][current_col - 1] == "S") || (matrix[current_row - 1][current_col + 1] == "S" && matrix[current_row + 1][current_col - 1] == "M")) {
+                    part2_count += 1;
+                }
+            }
+            current_row += 1;
+        }
+        current_col += 1;
+    }
     println!("Part 2 Count: {}", part2_count);
 }
